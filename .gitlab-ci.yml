@@ -1,0 +1,44 @@
+image: maven:3.6.3-jdk-11
+
+stages:
+  - test-compile
+  - install
+  - deploy
+
+test:
+  stage: test-compile
+  script:
+    - mvn clean test verify -Dmaven.repo.local=./scc210-2223-grp-26  
+    - mvn clean 
+  
+
+javadoc: 
+  stage: install 
+  needs: ["test"]
+  script: 
+    - mvn javadoc:javadoc -Dmaven.repo.local=./scc210-2223-grp-26
+
+install:
+  stage: install
+  needs: ["test"]
+  script:
+    - mvn install verify -B -Dmaven.repo.local=./scc210-2223-grp-26
+    - ls
+
+
+deploy: 
+  stage: deploy
+  needs: ["install", "javadoc"]
+  script: 
+    - mvn deploy
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    paths:
+      - src/
+      - target/
+      - pom.xml
+
+
+
+
+
