@@ -1,0 +1,16 @@
+How to deploy
+--------------
+* Test : mvn clean test
+
+* Deploy : mvn clean deploy
+
+* Javadoc : mvn javadoc:javadoc
+
+
+Usage
+-----
+Java 8 or later to run PixelBase
+You can run the application from command line
+
+    - cd ./target
+    - java -jar pixelbased-1.1-Released.jar
